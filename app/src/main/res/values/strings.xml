@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">QuizApp</string>
+
+
+    <!--Quiz questions-->
+    <string name="question1">What is the capital of Australia?</string>                 <!-- radio -->
+    <string name="question2">What are the 3 largest oceans?</string>                    <!-- checkbox -->
+    <string name="question3">The suez canal connects which 2 seas?</string>             <!-- radio -->
+    <string name="question4">Who is 44th President of USA?</string>        <!-- radio-->
+    <string name="question5">What are the colors Indian flag?</string>       <!-- checkbox  4 -->
+    <string name="question6">How many countries are there in Schengen area?</string>  <!-- edit 26-->
+    <string name="question7">How many red stripes are there in USA flag?</string>    <!-- edit text   13 -->
+    <string name="question8">What is the capital of Hawaii?</string>                   <!--radio Honolulu -->
+    <string name="question9">What is the largest city in Canada?</string>               <!-- radio Toronto -->
+    <string name="question10">How many time zones are there in the world?</string>     <!-- Edit text 24-->
+
+</resources>
