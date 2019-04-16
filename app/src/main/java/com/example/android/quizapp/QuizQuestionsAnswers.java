@@ -6,7 +6,7 @@ public class QuizQuestionsAnswers {
     private int questionResId;
     private int questionImageId;
 
-    String answerType;
+    private AnswerType answerType;
 
     //The actual answer to compare user input against
     private String answer[];
@@ -16,14 +16,7 @@ public class QuizQuestionsAnswers {
     public QuizQuestionsAnswers(int questionResId, int questionImageId, AnswerType answerType, String[] answer, String[] choicesAvailable){
         this.questionResId = questionResId;
         this.questionImageId = questionImageId;
-
-        if(answerType.gettype().equals("radio"))
-            this.answerType = "radio";
-        else if (answerType.gettype().equals("checkbox"))
-            this.answerType = "checkbox";
-        else if(answerType.gettype().equals("editText"))
-            this.answerType ="editText";
-
+        this.answerType = answerType;
         this.answer = answer;
         this.choicesAvailable = choicesAvailable;
     }
@@ -35,7 +28,7 @@ public class QuizQuestionsAnswers {
         return this.questionImageId;
     }
 
-    public String getAnswerType()
+    public AnswerType getAnswerType()
     {
         return this.answerType;
     }

@@ -1,5 +1,8 @@
 package com.example.android.quizapp;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -12,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,17 +41,19 @@ public class MainActivity extends AppCompatActivity {
     String[] choicesAvailable9 = {"Vancouver","Montreal","Toronto", "Calgary"};
     String[] choicesAvailable10 = {"24"};
 
-    private Button nextButton;
+    private TextView question_number_tracker;
     private TextView quizQuestionTextView;
     private LinearLayout quizAnswersOptionsLinearLayout;
     private ImageView quizImageView;
+    private Button nextButton;
     private int questionIndex;
-    private String answerType;
+    private int questionNumber;
+    int score;
 
     private QuizQuestionsAnswers[] questionsAnswers = new QuizQuestionsAnswers[]{
             new QuizQuestionsAnswers(R.string.question1, R.drawable.australia, AnswerType.RADIO, answer1, choicesAvailable1),
             new QuizQuestionsAnswers(R.string.question2, R.drawable.threeoceans, AnswerType.CHECKBOX, answer2, choicesAvailable2),
-            new QuizQuestionsAnswers(R.string.question3, R.drawable.earth, AnswerType.RADIO, answer3, choicesAvailable3),
+            new QuizQuestionsAnswers(R.string.question3, R.drawable.earth, AnswerType.CHECKBOX, answer3, choicesAvailable3),
             new QuizQuestionsAnswers(R.string.question4, R.drawable.usa, AnswerType.RADIO, answer4, choicesAvailable4),
             new QuizQuestionsAnswers(R.string.question5, R.drawable.india, AnswerType.CHECKBOX, answer5, choicesAvailable5),
             new QuizQuestionsAnswers(R.string.question6, R.drawable.schengen, AnswerType.EDITTEXT, answer6, choicesAvailable6),
@@ -62,99 +68,142 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        questionIndex = 0;
+        question_number_tracker = findViewById(R.id.question_number_tracker);
+        quizQuestionTextView = findViewById(R.id.quiz_question_text_view);
+        quizAnswersOptionsLinearLayout = findViewById(R.id.quiz_answer_options_linear_layout);
+        quizImageView = findViewById(R.id.quiz_image);
+        nextButton = findViewById(R.id.next_button);
+
+        if(savedInstanceState != null) {
+            questionIndex = savedInstanceState.getInt("questionIndex");
+        }
+
+        //Called first time when activity is created as well as when button is clicked
+        setQuestionAnswersViews();
+        inflateQuestionAnswersLayout();
+
         createLayoutsBasedOnQuestions();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("questionIndex", questionIndex);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        questionIndex = savedInstanceState.getInt("questionIndex");
     }
 
     //read questions and inflate the layout
     public void createLayoutsBasedOnQuestions() {
-        nextButton = findViewById(R.id.next_button);
-        quizQuestionTextView = findViewById(R.id.quiz_question_text_view);
-        quizImageView = findViewById(R.id.quiz_image);
-        quizAnswersOptionsLinearLayout = findViewById(R.id.quiz_answer_options_linear_layout);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                questionIndex = (questionIndex + 1) % questionsAnswers.length;
-                quizQuestionTextView.setText(questionsAnswers[questionIndex].getQuestion());
-                quizImageView.setImageDrawable(null);
-                quizImageView.setImageResource(questionsAnswers[questionIndex].getQuestionImage());
-
-                createAnswersView(questionIndex, quizAnswersOptionsLinearLayout);
-
-                if (questionIndex == questionsAnswers.length - 1) {
-                    nextButton.setText("Done");
-                    nextButton.setEnabled(false);
-
+                if (questionIndex == questionsAnswers.length-1) {
+                    //TODO: Add logic to show results in a tost message and reset the quiz
+                    String messageBasedOnScore = "Great Job!!";
+                    Toast toast = Toast.makeText(MainActivity.this, messageBasedOnScore+ " You Scored:"+score + ". Quiz Restarted", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    View view = toast.getView();
+                    view.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary, null), PorterDuff.Mode.SRC_IN);
+                    TextView text = view.findViewById(android.R.id.message);
+                    text.setTextColor(Color.WHITE);
+                    text.setTextSize(25);
+                    text.setGravity(Gravity.CENTER);
+                    toast.show();
                 }
+                questionIndex = (questionIndex+1) % questionsAnswers.length;
+
+                setQuestionAnswersViews();
+                inflateQuestionAnswersLayout();
             }
         });
     }
 
-    private void createAnswersView(int questionIndex, LinearLayout viewToInflate){
-        viewToInflate.removeAllViews();
-        answerType = questionsAnswers[questionIndex].getAnswerType();
+    private void setQuestionAnswersViews(){
+        questionNumber = questionIndex+1;
+        question_number_tracker.setText("Question: "+questionNumber+"/10");
+        quizQuestionTextView.setText(questionsAnswers[questionIndex].getQuestion());
+        quizImageView.setImageDrawable(null);
+        quizImageView.setImageResource(questionsAnswers[questionIndex].getQuestionImage());
+    }
 
-        if(answerType.equals("radio"))
-        {
-            RadioGroup radioGroup = new RadioGroup(getApplicationContext());
+    private void inflateQuestionAnswersLayout(){
+        quizAnswersOptionsLinearLayout.removeAllViews();
+
+        switch(questionsAnswers[questionIndex].getAnswerType()){
+            case RADIO:
+            final RadioGroup radioGroup = new RadioGroup(this);
             radioGroup.setOrientation(RadioGroup.VERTICAL);
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            RadioButton option1 = new RadioButton(getApplicationContext());
+                }
+            });
+
+            RadioButton option1 = new RadioButton(this);
             option1.setText(questionsAnswers[questionIndex].getChoicesAvailable()[0]);
             radioGroup.addView(option1);
 
-            RadioButton option2 = new RadioButton(getApplicationContext());
+            RadioButton option2 = new RadioButton(this);
             option2.setText(questionsAnswers[questionIndex].getChoicesAvailable()[1]);
             radioGroup.addView(option2);
 
-            RadioButton option3 = new RadioButton(getApplicationContext());
+            RadioButton option3 = new RadioButton(this);
             option3.setText(questionsAnswers[questionIndex].getChoicesAvailable()[2]);
             radioGroup.addView(option3);
 
-            RadioButton option4 = new RadioButton(getApplicationContext());
+            RadioButton option4 = new RadioButton(this);
             option4.setText(questionsAnswers[questionIndex].getChoicesAvailable()[3]);
             radioGroup.addView(option4);
 
-//            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT,RadioGroup.LayoutParams.WRAP_CONTENT);
-//            params.gravity = Gravity.CENTER;
-//            radioGroup.setLayoutParams(params);
-            viewToInflate.addView(radioGroup);
-        }
-        else if(answerType.equals("checkbox"))
-        {
-            //inflate checkbox view
-            CheckBox checkBox1 = new CheckBox(getApplicationContext());
-            checkBox1.setText(questionsAnswers[questionIndex].getChoicesAvailable()[0]);
+            quizAnswersOptionsLinearLayout.addView(radioGroup);
 
-            CheckBox checkBox2 = new CheckBox(getApplicationContext());
-            checkBox2.setText(questionsAnswers[questionIndex].getChoicesAvailable()[1]);
+            int id = radioGroup.getCheckedRadioButtonId();
+            String selectedRadioButtonText;
+            if(id!=-1) {   //if radio button is selected
+                RadioButton selectedRadioButton = radioGroup.findViewById(id);
+                int radioId = radioGroup.indexOfChild(selectedRadioButton);
+                RadioButton radioButton = (RadioButton) radioGroup.getChildAt(radioId);
+                selectedRadioButtonText = (String) radioButton.getText();
 
-            CheckBox checkBox3 = new CheckBox(getApplicationContext());
-            checkBox3.setText(questionsAnswers[questionIndex].getChoicesAvailable()[2]);
+//                for (String choices : questionsAnswers[questionIndex].getChoicesAvailable()) {
+                    if(selectedRadioButtonText.trim().equalsIgnoreCase(qu));
+                    score = score+1;
+//                }
+            }
+            break;
+            case CHECKBOX:
+                //inflate checkbox view
+                CheckBox checkBox1 = new CheckBox(this);
+                checkBox1.setText(questionsAnswers[questionIndex].getChoicesAvailable()[0]);
 
-            CheckBox checkBox4 = new CheckBox(getApplicationContext());
-            checkBox4.setText(questionsAnswers[questionIndex].getChoicesAvailable()[3]);
+                CheckBox checkBox2 = new CheckBox(this);
+                checkBox2.setText(questionsAnswers[questionIndex].getChoicesAvailable()[1]);
 
-//            checkBox1.setGravity(Gravity.CENTER);
-//            checkBox2.setGravity(Gravity.CENTER);
-//            checkBox3.setGravity(Gravity.CENTER);
-//            checkBox4.setGravity(Gravity.CENTER);
+                CheckBox checkBox3 = new CheckBox(this);
+                checkBox3.setText(questionsAnswers[questionIndex].getChoicesAvailable()[2]);
 
-            viewToInflate.addView(checkBox1);
-            viewToInflate.addView(checkBox2);
-            viewToInflate.addView(checkBox3);
-            viewToInflate.addView(checkBox4);
+                CheckBox checkBox4 = new CheckBox(this);
+                checkBox4.setText(questionsAnswers[questionIndex].getChoicesAvailable()[3]);
 
-        }
-        else if(answerType.equals("editText"))
-        {
-            //inflate Edit text view
-            EditText editText = new EditText(getApplicationContext());
-            editText.setWidth(450);
-            editText.setHint("Enter number here");
-            viewToInflate.addView(editText);
+                quizAnswersOptionsLinearLayout.addView(checkBox1);
+                quizAnswersOptionsLinearLayout.addView(checkBox2);
+                quizAnswersOptionsLinearLayout.addView(checkBox3);
+                quizAnswersOptionsLinearLayout.addView(checkBox4);
+            break;
+            case EDITTEXT:
+                //inflate Edit text view
+                EditText editText = new EditText(this);
+                editText.setWidth(450);
+                editText.setHint("Enter number here");
+                quizAnswersOptionsLinearLayout.addView(editText);
+                break;
         }
     }
 }

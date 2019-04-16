@@ -12,30 +12,34 @@
         android:orientation="vertical"
         android:padding="8dp">
         <TextView
+            android:id="@+id/question_number_tracker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Question: 1/10"
+
             android:textSize="18sp"/>
+        <!--android:text="Question: 1/10"-->
     <TextView
         android:id="@+id/quiz_question_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/question1"
+
         android:layout_gravity="center"
         android:fontFamily="sans-serif-medium"
         android:textSize="20sp"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"/>
+        <!--android:text="@string/question1"-->
 
     <ImageView
         android:id="@+id/quiz_image"
         android:layout_width="200dp"
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/australia"
+
         android:layout_marginBottom="30dp"
         />
+        <!--android:src="@drawable/australia"-->
         <LinearLayout
             android:id="@+id/quiz_answer_options_linear_layout"
             android:layout_height="wrap_content"
@@ -44,27 +48,27 @@
             android:orientation="vertical"
             android:layout_marginBottom="30dp">
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sydney"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Canberra"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Melbourne"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Brisbane"/>
-            </RadioGroup>
+            <!--<RadioGroup-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center">-->
+                <!--<RadioButton-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Sydney"/>-->
+                <!--<RadioButton-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Canberra"/>-->
+                <!--<RadioButton-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Melbourne"/>-->
+                <!--<RadioButton-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Brisbane"/>-->
+            <!--</RadioGroup>-->
 
         </LinearLayout>
         <Button
