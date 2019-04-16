@@ -17,7 +17,20 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
+
+    private TextView question_number_tracker;
+    private TextView quizQuestionTextView;
+    private LinearLayout quizAnswersOptionsLinearLayout;
+    private ImageView quizImageView;
+    private Button nextButton;
+    private int questionIndex;
+    private int questionNumber;
+    private int score;
+//    private boolean isScoreIncremented = false;
+    private HashMap<Integer, Boolean> scoreTracker = new HashMap<>();
 
     String[] answer1 = {"Canberra"};
     String[] answer2 = {"Pacific Ocean", "Atlantic Ocean", "Indian Ocean"};
@@ -40,15 +53,6 @@ public class MainActivity extends AppCompatActivity {
     String[] choicesAvailable8 = {"Maui", "Honolulu", "Kauai", "Hilo"};
     String[] choicesAvailable9 = {"Vancouver","Montreal","Toronto", "Calgary"};
     String[] choicesAvailable10 = {"24"};
-
-    private TextView question_number_tracker;
-    private TextView quizQuestionTextView;
-    private LinearLayout quizAnswersOptionsLinearLayout;
-    private ImageView quizImageView;
-    private Button nextButton;
-    private int questionIndex;
-    private int questionNumber;
-    int score;
 
     private QuizQuestionsAnswers[] questionsAnswers = new QuizQuestionsAnswers[]{
             new QuizQuestionsAnswers(R.string.question1, R.drawable.australia, AnswerType.RADIO, answer1, choicesAvailable1),
@@ -104,6 +108,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (questionIndex == questionsAnswers.length-1) {
+
+                    for(Boolean correctAnswers:scoreTracker.values())
+                    {
+                        if(correctAnswers.booleanValue() == true)
+                        {
+                            score++;
+                        }
+                    }
+
                     //TODO: Add logic to show results in a tost message and reset the quiz
                     String messageBasedOnScore = "Great Job!!";
                     Toast toast = Toast.makeText(MainActivity.this, messageBasedOnScore+ " You Scored:"+score + ". Quiz Restarted", Toast.LENGTH_LONG);
@@ -115,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                     text.setTextSize(25);
                     text.setGravity(Gravity.CENTER);
                     toast.show();
+
+                    score = 0;
                 }
                 questionIndex = (questionIndex+1) % questionsAnswers.length;
 
@@ -139,63 +154,49 @@ public class MainActivity extends AppCompatActivity {
             case RADIO:
             final RadioGroup radioGroup = new RadioGroup(this);
             radioGroup.setOrientation(RadioGroup.VERTICAL);
+
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    String selectedRadioButtonText;
+                    if (checkedId != -1) {   //if radio button is selected
+                        int radioId = radioGroup.indexOfChild(group.findViewById(checkedId));
+                        RadioButton radioButton = (RadioButton) radioGroup.getChildAt(radioId);
+                        selectedRadioButtonText = (String) radioButton.getText();
 
+                        if (selectedRadioButtonText.trim().equalsIgnoreCase(questionsAnswers[questionIndex].getCorrectAnswer()[0]))
+                        {
+                            scoreTracker.put(questionIndex,true);
+//                            if(!isScoreIncremented) {  // Added if multiple times radio button us clicked score is not incremented
+//                                score = score + 1;
+//                                isScoreIncremented=!isScoreIncremented;    //flipping the boolean to mark that the score is already incremented once
+//                            }
+                        }
+                        else
+                        {
+                            scoreTracker.put(questionIndex,false);
+                        }
+                    }
                 }
             });
 
-            RadioButton option1 = new RadioButton(this);
-            option1.setText(questionsAnswers[questionIndex].getChoicesAvailable()[0]);
-            radioGroup.addView(option1);
-
-            RadioButton option2 = new RadioButton(this);
-            option2.setText(questionsAnswers[questionIndex].getChoicesAvailable()[1]);
-            radioGroup.addView(option2);
-
-            RadioButton option3 = new RadioButton(this);
-            option3.setText(questionsAnswers[questionIndex].getChoicesAvailable()[2]);
-            radioGroup.addView(option3);
-
-            RadioButton option4 = new RadioButton(this);
-            option4.setText(questionsAnswers[questionIndex].getChoicesAvailable()[3]);
-            radioGroup.addView(option4);
-
-            quizAnswersOptionsLinearLayout.addView(radioGroup);
-
-            int id = radioGroup.getCheckedRadioButtonId();
-            String selectedRadioButtonText;
-            if(id!=-1) {   //if radio button is selected
-                RadioButton selectedRadioButton = radioGroup.findViewById(id);
-                int radioId = radioGroup.indexOfChild(selectedRadioButton);
-                RadioButton radioButton = (RadioButton) radioGroup.getChildAt(radioId);
-                selectedRadioButtonText = (String) radioButton.getText();
-
-//                for (String choices : questionsAnswers[questionIndex].getChoicesAvailable()) {
-                    if(selectedRadioButtonText.trim().equalsIgnoreCase(qu));
-                    score = score+1;
-//                }
+            for(String availableChoice:questionsAnswers[questionIndex].getChoicesAvailable())  {
+                RadioButton option = new RadioButton(this);
+                option.setText(availableChoice);
+                radioGroup.addView(option);
             }
+            quizAnswersOptionsLinearLayout.addView(radioGroup);
             break;
             case CHECKBOX:
                 //inflate checkbox view
-                CheckBox checkBox1 = new CheckBox(this);
-                checkBox1.setText(questionsAnswers[questionIndex].getChoicesAvailable()[0]);
+                for(String availableChoice:questionsAnswers[questionIndex].getChoicesAvailable())  {
+                    CheckBox checkBox = new CheckBox(this);
+                    checkBox.setText(availableChoice);
 
-                CheckBox checkBox2 = new CheckBox(this);
-                checkBox2.setText(questionsAnswers[questionIndex].getChoicesAvailable()[1]);
+//                    checkBox.setOnClickListener();
 
-                CheckBox checkBox3 = new CheckBox(this);
-                checkBox3.setText(questionsAnswers[questionIndex].getChoicesAvailable()[2]);
-
-                CheckBox checkBox4 = new CheckBox(this);
-                checkBox4.setText(questionsAnswers[questionIndex].getChoicesAvailable()[3]);
-
-                quizAnswersOptionsLinearLayout.addView(checkBox1);
-                quizAnswersOptionsLinearLayout.addView(checkBox2);
-                quizAnswersOptionsLinearLayout.addView(checkBox3);
-                quizAnswersOptionsLinearLayout.addView(checkBox4);
+                    quizAnswersOptionsLinearLayout.addView(checkBox);
+                }
             break;
             case EDITTEXT:
                 //inflate Edit text view
