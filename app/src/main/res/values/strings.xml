@@ -1,17 +1,80 @@
 <resources>
     <string name="app_name">QuizApp</string>
 
-
     <!--Quiz questions-->
-    <string name="question1">What is the capital of Australia?</string>                 <!-- radio -->
-    <string name="question2">What are the 3 largest oceans?</string>                    <!-- checkbox -->
-    <string name="question3">The suez canal connects which 2 seas?</string>             <!-- radio -->
-    <string name="question4">Who is 44th President of USA?</string>        <!-- radio-->
-    <string name="question5">What are the colors Indian flag?</string>       <!-- checkbox  4 -->
-    <string name="question6">How many countries are there in Schengen area?</string>  <!-- edit 26-->
-    <string name="question7">How many red stripes are there in USA flag?</string>    <!-- edit text   13 -->
-    <string name="question8">What is the capital of Hawaii?</string>                   <!--radio Honolulu -->
-    <string name="question9">What is the largest city in Canada?</string>               <!-- radio Toronto -->
-    <string name="question10">How many time zones are there in the world?</string>     <!-- Edit text 24-->
+    <string name="question1">What is the capital of Australia?</string>
+    <string name="question2">What are the 3 largest oceans?</string>
+    <string name="question3">The suez canal connects which 2 seas?</string>
+    <string name="question4">Who is 44th President of USA?</string>
+    <string name="question5">What are the colors Indian flag?</string>
+    <string name="question6">How many countries are there in Schengen area?</string>
+    <string name="question7">How many red stripes are there in USA flag?</string>
+    <string name="question8">What is the capital of Hawaii?</string>
+    <string name="question9">What is the largest city in Canada?</string>
+    <string name="question10">How many time zones are there in the world?</string>
+
+    <!--Quiz answers-->
+    <string name="answer1">Canberra</string>
+    <string name="answer2a">Pacific Ocean</string>
+    <string name="answer2b">Atlantic Ocean</string>
+    <string name="answer2c">Indian Ocean</string>
+    <string name="answer3a">Mediterranean sea</string>
+    <string name="answer3b">Red sea</string>
+    <string name="answer4">Barack Obama</string>
+    <string name="answer5a">Saffron</string>
+    <string name="answer5b">White</string>
+    <string name="answer5c">Green</string>
+    <string name="answer5d">Blue</string>
+    <string name="answer6">26</string>
+    <string name="answer7">13</string>
+    <string name="answer8">Honolulu</string>
+    <string name="answer9">Toronto</string>
+    <string name="answer10">24</string>
+
+    <!--Quiz available choices-->
+    <string name="choicesAvailable1a">Sydney</string>
+    <string name="choicesAvailable1b">Canberra</string>
+    <string name="choicesAvailable1c">Melbourne</string>
+    <string name="choicesAvailable1d">Brisbane</string>
+    <string name="choicesAvailable2a">Pacific Ocean</string>
+    <string name="choicesAvailable2b">Atlantic Ocean</string>
+    <string name="choicesAvailable2c">Indian Ocean</string>
+    <string name="choicesAvailable2d">Arctic Ocean</string>
+    <string name="choicesAvailable3a">Mediterranean sea</string>
+    <string name="choicesAvailable3b">Black sea</string>
+    <string name="choicesAvailable3c">Arabian Sea</string>
+    <string name="choicesAvailable3d">Red sea</string>
+    <string name="choicesAvailable4a">George W. Bush</string>
+    <string name="choicesAvailable4b">Barack Obama</string>
+    <string name="choicesAvailable4c">Bill Clinton</string>
+    <string name="choicesAvailable4d">Ronald Wilson Reagan</string>
+    <string name="choicesAvailable5a">Saffron</string>
+    <string name="choicesAvailable5b">White</string>
+    <string name="choicesAvailable5c">Green</string>
+    <string name="choicesAvailable5d">Blue</string>
+    <string name="choicesAvailable6">26</string>
+    <string name="choicesAvailable7">13</string>
+    <string name="choicesAvailable8a">Maui</string>
+    <string name="choicesAvailable8b">Honolulu</string>
+    <string name="choicesAvailable8c">Kauai</string>
+    <string name="choicesAvailable8d">Hilo</string>
+    <string name="choicesAvailable9a">Vancouver</string>
+    <string name="choicesAvailable9b">Montreal</string>
+    <string name="choicesAvailable9c">Toronto</string>
+    <string name="choicesAvailable9d">Calgary</string>
+    <string name="choicesAvailable10">24</string>
+
+    <string name="btnLabelNext">Next</string>
+    <string name="btnLabelSubmit">Submit</string>
+
+    <string name="grtJob">Great Job!!</string>
+    <string name="tryAgain">Try Again?</string>
+    <string name="niceTry">Nice Try!</string>
+    <string name="youScored">You Scored:</string>
+    <string name="score">score</string>
+    <string name="quizRestarted">Quiz Restarted!</string>
+
+    <string name="question">Question:</string>
+    <string name="editTextHelpText">Enter number here</string>
 
 </resources>

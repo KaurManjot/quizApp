@@ -1,16 +1,21 @@
 package com.example.android.quizapp;
 
-public class QuizQuestionsAnswers {
-
-    //Question resource id from strings.xml file
+/*
+    Class to hold question and data related to that question like - answer to the question, choices that will be displayed for the question,
+     image associated to the question etc
+ */
+public class QuizQuestionsAnswers
+{
     private int questionResId;
     private int questionImageId;
 
+    /* Based on AnswerType Enum - that can have values - RADIO, CHECKBOX, EDITTEXT inflate LinearLayout to present user with options*/
     private AnswerType answerType;
 
-    //The actual answer to compare user input against
+    /* The expected answer to compare the user input against */
     private String answer[];
 
+    /* Choices available to user to show on screen */
     private String[] choicesAvailable;
 
     public QuizQuestionsAnswers(int questionResId, int questionImageId, AnswerType answerType, String[] answer, String[] choicesAvailable){
@@ -21,10 +26,13 @@ public class QuizQuestionsAnswers {
         this.choicesAvailable = choicesAvailable;
     }
 
-    public int getQuestion(){
+    public int getQuestion()
+    {
         return this.questionResId;
     }
-    public int getQuestionImage(){
+
+    public int getQuestionImage()
+    {
         return this.questionImageId;
     }
 
@@ -33,12 +41,13 @@ public class QuizQuestionsAnswers {
         return this.answerType;
     }
 
-    public String[] getCorrectAnswer(){
+    public String[] getCorrectAnswer()
+    {
         return this.answer;
     }
 
-    public String[] getChoicesAvailable() {
+    public String[] getChoicesAvailable()
+    {
         return this.choicesAvailable;
     }
-
 }
