@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         /* to get the strings from resources the data generation need to be under onCreate
 
         /* Generate expected answers array*/
-        String[] answer1 = {getString(R.string.answer1)};
+        String[] answer1 = {getResources().getString(R.string.answer1)};
         String[] answer2 = {getString(R.string.answer2a), getString(R.string.answer2b), getString(R.string.answer2c)};
         String[] answer3 = {getString(R.string.answer3a), getString(R.string.answer3b)};
         String[] answer4 = {getString(R.string.answer4)};
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* Set the button label to "Next" for first time. Later text will be updated to "Submit" */
         nextButton.setText(buttonLabel);
+        nextButton.setContentDescription(buttonLabel);
 
         /* Called when activity is created as well as when button is clicked */
         setQuestionAnswersViews();
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     buttonLabel = getString(R.string.btnLabelSubmit);
                     nextButton.setText(buttonLabel);
+                    nextButton.setContentDescription(buttonLabel);
                 }
 
                 /* Based on correct answers in HashMap calculate the final score */
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     /* Reset the button text back "Next */
                     buttonLabel = getString(R.string.btnLabelNext);
                     nextButton.setText(buttonLabel);
+                    nextButton.setContentDescription(buttonLabel);
 
                     /* Adding Toast message variation based on score */
                     String messageBasedOnScore;
@@ -207,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         questionNumber = questionIndex + 1;
         question_number_tracker.setText(getString(R.string.question)+" " + questionNumber + "/"+questionsAnswers.length);
         quizQuestionTextView.setText(questionsAnswers[questionIndex].getQuestion());
+        quizQuestionTextView.setContentDescription(getString(questionsAnswers[questionIndex].getQuestion()));
         quizImageView.setImageDrawable(null);
         quizImageView.setImageResource(questionsAnswers[questionIndex].getQuestionImage());
     }
