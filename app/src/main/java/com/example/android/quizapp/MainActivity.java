@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* to get the strings from resources the data generation need to be under onCreate
 
+        TODO: Follow mvvm android architecture to move the data and clean code.
         /* Generate expected answers array*/
         String[] answer1 = {getResources().getString(R.string.answer1)};
         String[] answer2 = {getString(R.string.answer2a), getString(R.string.answer2b), getString(R.string.answer2c)};
