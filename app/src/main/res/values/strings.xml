@@ -74,7 +74,7 @@
     <string name="score">score</string>
     <string name="quizRestarted">Quiz Restarted!</string>
 
-    <string name="question">Question:</string>
+    <string name="question">Question:&#160;</string>
     <string name="editTextHelpText">Enter number here</string>
 
 </resources>

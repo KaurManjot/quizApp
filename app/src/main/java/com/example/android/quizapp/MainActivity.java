@@ -27,7 +27,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    /* Declaring scoreTracker static to avoid score value reset on device rotation*/
+    /*
+        Declaring scoreTracker static to avoid score value reset on device rotation
+        TODO: Use SparseBooleanArray instead of HashMap for efficiency if more questions added
+        https://developer.android.com/reference/android/util/SparseBooleanArray
+    */
     private static HashMap<Integer, Boolean> scoreTracker = new HashMap<>();
 
     /* Declaring datatypes to hold layout and views */
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         question_number_tracker = findViewById(R.id.question_number_tracker);
         quizQuestionTextView = findViewById(R.id.quiz_question_text_view);
         quizImageView = findViewById(R.id.quiz_image);
+        /* TODO: Instead of setting content descriptor for image in XML add descriptors for each image in QuizQuestionsAnswers object and set here */
         nextButton = findViewById(R.id.next_button);
 
         /* To handle persistence of data on rotation */
@@ -159,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     for (Boolean correctAnswers : scoreTracker.values())
                     {
-                        if (correctAnswers.booleanValue() == true)
+                        if (correctAnswers)
                         {
                             score++;
                         }
@@ -208,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
     private void setQuestionAnswersViews()
     {
         questionNumber = questionIndex + 1;
-        question_number_tracker.setText(getString(R.string.question)+" " + questionNumber + "/"+questionsAnswers.length);
+        question_number_tracker.setText(getString(R.string.question) + questionNumber + "/"+questionsAnswers.length);
         quizQuestionTextView.setText(questionsAnswers[questionIndex].getQuestion());
         quizQuestionTextView.setContentDescription(getString(questionsAnswers[questionIndex].getQuestion()));
         quizImageView.setImageDrawable(null);
@@ -336,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText editText = new EditText(this);
                 editText.setWidth(450);
                 editText.setHint(getString(R.string.editTextHelpText));
+                editText.setContentDescription(getString(R.string.editTextHelpText));
                 quizAnswersOptionsLinearLayout.addView(editText);
 
                 /* Attach listener to get the entered text for user and update the score hashmap */
