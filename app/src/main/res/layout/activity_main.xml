@@ -38,7 +38,7 @@
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:contentDescription="quiz image view"/>
+            android:contentDescription="quiz image"/>
 
         <!--Placeholder view to add all the user choices available-->
         <LinearLayout
