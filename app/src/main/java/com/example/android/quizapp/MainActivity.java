@@ -2,10 +2,10 @@ package com.example.android.quizapp;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Button nextButton;
 
     private int questionIndex;
-    private int questionNumber;
     private int score;
     private String buttonLabel;
 
@@ -213,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     /* Inflate 3 views - Question count tracker text, Question text view and image for the question */
     private void setQuestionAnswersViews()
     {
-        questionNumber = questionIndex + 1;
+        int questionNumber = questionIndex + 1;
         question_number_tracker.setText(getString(R.string.question) + questionNumber + "/"+questionsAnswers.length);
         quizQuestionTextView.setText(questionsAnswers[questionIndex].getQuestion());
         quizQuestionTextView.setContentDescription(getString(questionsAnswers[questionIndex].getQuestion()));
@@ -225,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         Based on answer type - multiple choice, single answer,
         text create views with Checkbox, radio button, EditText respectively
         and attach listeners when each one is selected inside LinearLayout
+        TODO: If user select an option or enter a text and rotate the screen save the choice or text entered
     */
     private void inflateQuestionAnswersLayout()
     {
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                                   If the user change the selection say from correct to incorrect or vice-versa, HashMap will update the score by overwriting the
                                   previous value.
                              */
-                            if (selectedAnswers.containsAll(expectedAnswersList))
+                            if (selectedAnswers.containsAll(expectedAnswersList) && (selectedAnswers.size() == expectedAnswersList.size()))
                             {
                                 scoreTracker.put(questionIndex, true);
                             }
@@ -343,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
                 editText.setWidth(450);
                 editText.setHint(getString(R.string.editTextHelpText));
                 editText.setContentDescription(getString(R.string.editTextHelpText));
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 quizAnswersOptionsLinearLayout.addView(editText);
 
                 /* Attach listener to get the entered text for user and update the score hashmap */
